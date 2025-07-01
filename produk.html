@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Produk - SmartInventory</title>
+    <link href="style.css" rel="stylesheet" />
+  </head>
+  <body class="bg-gray-100 font-sans">
+    <!-- Header -->
+    <header class="bg-white shadow p-4 flex justify-between items-center">
+      <h1 class="text-2xl font-bold text-blue-600">SmartInventory</h1>
+      <a href="dashboard.html" class="text-sm text-blue-600 hover:underline"
+        >← Kembali ke Dashboard</a
+      >
+    </header>
+
+    <!-- Main Content -->
+    <main class="max-w-5xl mx-auto py-8 px-4">
+      <div class="bg-white p-6 rounded shadow">
+        <div class="flex justify-between items-center mb-4">
+          <h2 class="text-xl font-semibold text-gray-800">Daftar Produk</h2>
+          <a
+            href="tambah.html"
+            class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700"
+            >+ Tambah Produk</a
+          >
+        </div>
+
+        <table class="min-w-full table-auto border">
+          <thead>
+            <tr class="bg-gray-100 text-left">
+              <th class="border px-4 py-2">#</th>
+              <th class="border px-4 py-2">Nama</th>
+              <th class="border px-4 py-2">Kategori</th>
+              <th class="border px-4 py-2">Stok</th>
+              <th class="border px-4 py-2">Harga</th>
+              <th class="border px-4 py-2">Aksi</th>
+            </tr>
+          </thead>
+          <tbody id="daftar-produk"></tbody>
+        </table>
+      </div>
+    </main>
+
+    <!-- Script -->
+    <script>
+      const tbody = document.getElementById("daftar-produk");
+      let data = JSON.parse(localStorage.getItem("produk")) || [];
+
+      function renderTabel() {
+        if (data.length === 0) {
+          tbody.innerHTML = `
+            <tr>
+              <td colspan="6" class="text-center text-gray-500 py-4">Belum ada produk.</td>
+            </tr>
+          `;
+          return;
+        }
+
+        tbody.innerHTML = ""; // Kosongkan dulu
+        data.forEach((item, index) => {
+          const bg = index % 2 === 0 ? "bg-gray-50" : "";
+          tbody.innerHTML += `
+            <tr class="${bg}">
+              <td class="border px-4 py-2">${index + 1}</td>
+              <td class="border px-4 py-2">${item.nama}</td>
+              <td class="border px-4 py-2">${item.kategori}</td>
+              <td class="border px-4 py-2">${item.stok}</td>
+              <td class="border px-4 py-2">Rp${item.harga.toLocaleString(
+                "id-ID"
+              )}</td>
+              <td class="border px-4 py-2 space-x-2">
+                <a href="edit.html?index=${index}" class="text-blue-600 hover:underline">✏️ Edit</a>
+                <button onclick="hapus(${index})" class="text-red-600 hover:underline">🗑️ Hapus</button>
+              </td>
+            </tr>
+          `;
+        });
+      }
+
+      function hapus(index) {
+        if (confirm("Yakin ingin menghapus produk ini?")) {
+          data.splice(index, 1);
+          localStorage.setItem("produk", JSON.stringify(data));
+          renderTabel();
+        }
+      }
+
+      renderTabel();
+    </script>
+  </body>
+</html>

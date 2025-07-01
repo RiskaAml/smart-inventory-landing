@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Edit Produk - SmartInventory</title>
+    <link href="style.css" rel="stylesheet" />
+    <link rel="icon" href="favicon.ico" />
+  </head>
+  <body class="bg-gray-100 font-sans p-6">
+    <div class="max-w-md mx-auto bg-white p-6 rounded shadow">
+      <h1 class="text-2xl font-bold mb-4 text-blue-600">Edit Produk</h1>
+      <form id="form-edit" class="space-y-4">
+        <input
+          type="text"
+          id="nama"
+          placeholder="Nama Barang"
+          class="w-full p-2 border rounded"
+          required
+        />
+        <input
+          type="text"
+          id="kategori"
+          placeholder="Kategori"
+          class="w-full p-2 border rounded"
+          required
+        />
+        <input
+          type="number"
+          id="stok"
+          placeholder="Stok"
+          class="w-full p-2 border rounded"
+          required
+        />
+        <input
+          type="number"
+          id="harga"
+          placeholder="Harga"
+          class="w-full p-2 border rounded"
+          required
+        />
+        <button
+          type="submit"
+          class="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700"
+        >
+          Simpan Perubahan
+        </button>
+      </form>
+    </div>
+
+    <script>
+      const params = new URLSearchParams(window.location.search);
+      const index = parseInt(params.get("index"));
+      const data = JSON.parse(localStorage.getItem("produk")) || [];
+
+      if (isNaN(index) || !data[index]) {
+        alert("Produk tidak ditemukan!");
+        window.location.href = "dashboard.html";
+      } else {
+        const produk = data[index];
+        document.getElementById("nama").value = produk.nama;
+        document.getElementById("kategori").value = produk.kategori;
+        document.getElementById("stok").value = produk.stok;
+        document.getElementById("harga").value = produk.harga;
+
+        document
+          .getElementById("form-edit")
+          .addEventListener("submit", function (e) {
+            e.preventDefault();
+
+            data[index] = {
+              nama: document.getElementById("nama").value,
+              kategori: document.getElementById("kategori").value,
+              stok: parseInt(document.getElementById("stok").value),
+              harga: parseInt(document.getElementById("harga").value),
+            };
+
+            localStorage.setItem("produk", JSON.stringify(data));
+            alert("Produk berhasil diperbarui!");
+            window.location.href = "dashboard.html";
+          });
+      }
+    </script>
+  </body>
+</html>
