@@ -37,4 +37,8 @@ smart-inventory/
 ├── node_modules/        # Tailwind & PostCSS dependencies
 └── README.md            # Project documentation
 
+---
+
+🧠 Built together with ChatGPT as part of my learning journey to understand how real-world web projects are structured and developed.
+
 
