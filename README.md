@@ -1,6 +1,7 @@
 # 🚀 SmartInventory — Lightweight Inventory Management Web App
 
 SmartInventory is a modern inventory management system built using pure HTML, TailwindCSS, and JavaScript. It’s designed for simplicity, speed, and functionality — perfect for small businesses, personal use, or as a front-end showcase project.
+Live Demo:[https://riskaaml.github.io/smart-inventory-landing/](https://riskaaml.github.io/smart-inventory-landing/)
 
 ---
 
